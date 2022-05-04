@@ -1,6 +1,6 @@
 import { UsersInterface } from './interfaces/users.interface';
 import { UsersEntity } from './entities/users.entity';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -17,6 +17,11 @@ export class UsersService {
       const entity = Object.assign(new UsersEntity(), data);
       await this.usersRepository.save(entity);
       return entity;
-    } catch (error) {}
+    } catch (error) {
+      throw new HttpException(
+        { message: 'Não foi possível criar o usuário.' },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }
