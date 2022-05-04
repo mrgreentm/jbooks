@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UsersModule } from './modules/users/users.module';
+import { PostsModule } from './modules/posts/posts.module';
+import { UsersEntity } from './modules/users/entities/users.entity';
 
 @Module({
   imports: [
@@ -10,15 +12,17 @@ import { AppService } from './app.service';
       type: 'mysql',
       host: process.env.TYPEORM_HOST,
       port: +process.env.TYPEORM_PORT,
-      username: process.env.TYPEORM_USERNAME,
-      database: process.env.TYPEORM_DATABASE,
-      password: process.env.TYPEORM_PASSWORD,
-      entities: [],
+      username: process.env.TYPEORM_USERNAME || 'root',
+      database: process.env.TYPEORM_DATABASE || 'jbooks',
+      password: process.env.TYPEORM_PASSWORD || 'admin',
+      entities: [UsersEntity],
       logging: false,
       cli: {
         migrationsDir: 'src/database/migrations',
       },
     }),
+    UsersModule,
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
