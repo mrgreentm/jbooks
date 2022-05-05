@@ -1,3 +1,4 @@
+import { hashPasswordTransform } from './../../../helper/cripto-transform';
 import { Field } from 'mysql2';
 import {
   Column,
@@ -19,7 +20,7 @@ export class UsersEntity {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ transformer: hashPasswordTransform })
   password: string;
 
   @CreateDateColumn({ name: 'created_at' })

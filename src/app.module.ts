@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { PostsModule } from './modules/posts/posts.module';
 import { UsersEntity } from './modules/users/entities/users.entity';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { UsersEntity } from './modules/users/entities/users.entity';
       database: process.env.TYPEORM_DATABASE || 'jbooks',
       password: process.env.TYPEORM_PASSWORD || 'admin',
       entities: [UsersEntity],
+      synchronize: false,
       logging: false,
       cli: {
         migrationsDir: 'src/database/migrations',
@@ -23,6 +25,7 @@ import { UsersEntity } from './modules/users/entities/users.entity';
     }),
     UsersModule,
     PostsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -3,4 +3,6 @@ export class UsersInterface {
   name: string;
   email: string;
   password: string;
+  createdAt?: Date;
+  deletedAt?: Date;
 }
