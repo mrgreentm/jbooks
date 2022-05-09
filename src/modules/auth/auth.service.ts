@@ -15,7 +15,6 @@ export class AuthService {
 
   async validateUser({ email, password }: AuthDto): Promise<AuthTypeInterface> {
     const user = await this.usersService.findUserByEmail(email);
-    console.log(user)
     const validPassword = compareSync(password, user.password);
 
     const token = await this.jwtToken(user);
